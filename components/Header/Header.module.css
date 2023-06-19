@@ -1,0 +1,22 @@
+.active {
+  text-decoration: underline;
+  position: relative;
+}
+.activeMobile {
+  position: relative;
+}
+
+.activeMobile::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 5px;
+  height: 100%;
+  background-color: white;
+}
+
+.nonActive {
+  color: "#bbbbbb30";
+}
