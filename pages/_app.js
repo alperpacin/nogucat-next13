@@ -6,13 +6,14 @@ import "@/styles/globals.css";
 const App = ({ Component, pageProps }) => {
   // Create a new supabase browser client on every first render.
   const [supabaseClient] = useState(() => createPagesBrowserClient());
+  const getLayout = Component.getLayout || ((page) => page);
 
   return (
     <SessionContextProvider
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </SessionContextProvider>
   );
 };

@@ -1,127 +1,103 @@
-import { usePathname } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import styles from "./Header.module.css";
+import { useState } from "react";
+
+const navigation = [
+  { title: "Currencies", path: "/currencies" },
+  { title: "Exchanges", path: "/exchanges" },
+  { title: "Watchlist", path: "/watchlist" },
+];
 
 const Header = () => {
-  const currentRoute = usePathname();
-
-  console.log(currentRoute);
-  const [nav, setNav] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  const handleNav = () => {
-    setNav(!nav);
-  };
+  const [state, setState] = useState(false);
 
   return (
-    <div className="w-full">
-      <div className="max-w-[1240px] mx-auto">
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-row">
-            <div className=" mr-9">
-              <span className="text-gray-400 text-[12px] mr-2">
-                Cryptocurrencies:
-              </span>
-              <span className="text-indigo-600 text-[13px]">{1412}</span>
-            </div>
-            <div>
-              <span className="text-gray-400  text-[12px] mr-2">Markets:</span>
-              <span className="text-indigo-600 text-[13px]">{29385}</span>
-            </div>
-          </div>
-          <div className="flex flex-row">
-            <div className=" mr-9">
-              <span className="text-gray-400  text-[12px] mr-2">
-                Market cap:
-              </span>
-              <span className="text-indigo-600 text-[13px]">
-                $331,761,957,269
-              </span>
-            </div>
-            <div>
-              <span className="text-gray-400  text-[12px] mr-2">
-                Volume 24h:
-              </span>
-              <span className="text-indigo-600 text-[13px]">
-                $29,385,395,122
-              </span>
-            </div>
-          </div>
-          <div>
-            <span className="text-gray-400  text-[12px] mr-2">
-              BTC Dominance:
-            </span>
-            <span className="text-indigo-600 text-[13px]">43.7%</span>
+    <nav className="bg-white border-b w-full md:static md:text-sm md:border-none">
+      <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
+        <div className="flex items-center justify-between py-3 md:py-5 md:block">
+          <a href="javascript:void(0)">
+            <Image
+              src={"/assets/images/logo.png"}
+              width={50}
+              height={50}
+              alt="Nogucat Logo"
+            />
+          </a>
+          <div className="md:hidden">
+            <button
+              className="text-gray-500 hover:text-gray-800"
+              onClick={() => setState((prev) => !prev)}
+            >
+              {state ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
-      </div>
-      <div className="max-w-[1240px] m-auto flex justify-between items-center h-full ">
-        <Link href="/">
-          <div className="font-bold text-2xl">Nogucat</div>
-        </Link>
-        <nav>
-          <ul className="hidden sm:flex ease-in duration-300">
-            <li
-              className={`p-4 rounded-md  duration-100 ease-in-out  hover:text-secondary-700 ${
-                isScrolled ? "text-white" : "text-black"
-              } ${currentRoute === "/" ? styles.active : styles.nonActive}`}
-            >
-              <Link href="/">Home</Link>
-            </li>
-            <li
-              className={`p-4 rounded-md hover:text-secondary-700 duration-100 ease-in-out ${
-                isScrolled ? "text-white " : "text-black"
-              }  ${
-                currentRoute === "/contact" ? styles.active : styles.nonActive
-              }`}
-            >
-              <Link href="/contact">Contact</Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Mobile Button */}
-        <div onClick={handleNav} className="block sm:hidden z-10">
-          {nav ? (
-            <AiOutlineClose size={20} style={{ color: `white` }} />
-          ) : (
-            <AiOutlineMenu size={20} />
-          )}
-        </div>
-        {/* Mobile Menu */}
         <div
-          className={
-            nav
-              ? "sm:hidden absolute top-0 left-0 right-0 bottom-0 opacity-100 z-1 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300"
-              : "sm:hidden absolute top-0 left-0 right-0 bottom-0 opacity-0 -z-10 invisible flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300"
-          }
+          className={`flex-1 pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
+            state ? "block" : "hidden"
+          }`}
         >
-          <ul className="flex flex-col w-full">
-            <li
-              onClick={handleNav}
-              className={`p-4 text-4xl hover:text-secondary-300 ${
-                currentRoute === "/" ? styles.activeMobile : styles.nonActive
-              }`}
-            >
-              <Link href="/">Home</Link>
-            </li>
-
-            <li
-              onClick={handleNav}
-              className={`p-4 text-4xl hover:text-secondary-300 ${
-                currentRoute === "/contact"
-                  ? styles.activeMobile
-                  : styles.nonActive
-              }`}
-            >
-              <Link href="/contact">Contact</Link>
-            </li>
+          <ul className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
+            {navigation.map((item, idx) => {
+              return (
+                <li key={idx} className="text-gray-700 hover:text-indigo-600">
+                  <a href={item.path} className="block">
+                    {item.title}
+                  </a>
+                </li>
+              );
+            })}
+            <span className="hidden w-px h-6 bg-gray-300 md:block"></span>
+            <div className="space-y-3 items-center gap-x-6 md:flex md:space-y-0">
+              <li>
+                <Link
+                  href={"/signup"}
+                  className="block py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none"
+                >
+                  Sign up
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={"/login"}
+                  className="block py-3 px-4 font-medium text-center text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none rounded-lg shadow md:inline"
+                >
+                  Log in
+                </Link>
+              </li>
+            </div>
           </ul>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
